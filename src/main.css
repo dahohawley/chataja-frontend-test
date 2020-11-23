@@ -10,7 +10,6 @@ body {
     height: 900px;
 }
 
-
 .chatContainer{
     margin : 60px auto;
     background: #fff;
@@ -107,8 +106,9 @@ input.searchInput:focus{
 }
 
 #noChatImage{
+    margin: 0 auto;
     margin-top: 100px;
-    width: 500px;
+    max-width: 300px;
     border-radius: 100px;
     opacity: 70%;
 }
@@ -184,11 +184,15 @@ input.searchInput:focus{
     overflow-x: hidden;
 }
 
+.form-chat-box{
+    width: 890px;
+}
+
 input.send-chat{
     border: none;
-    width: 540px;
+    max-width: 900px;
     padding: 10px 14px;
-    margin: 8px;
+    margin: auto;
     color: grey;
     border-radius: 40px;
 }

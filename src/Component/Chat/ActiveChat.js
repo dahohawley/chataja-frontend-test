@@ -26,7 +26,7 @@ function ActiveChat(props) {
         document.getElementById('chat-input').value = ""
         props.sendMessage(message)
     }
-
+    
     let messageData = []
     if(props.messages != null){
         for(const message in props.messages){
