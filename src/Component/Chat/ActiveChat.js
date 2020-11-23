@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import NoChat from './NoChat'
 import ChatBubble from './ChatBubble'
 
@@ -14,12 +14,11 @@ import {
 } from 'reactstrap'
 
 function ActiveChat(props) {
+    const user    = props.user
+
     if(!props.hasChat){
         return <NoChat/>
     }
-
-    const user    = props.user
-    let msg       = [];
 
     const sendMessage = (e) =>{
         e.preventDefault()
@@ -27,6 +26,18 @@ function ActiveChat(props) {
         document.getElementById('chat-input').value = ""
         props.sendMessage(message)
     }
+
+    let messageData = []
+    if(props.messages != null){
+        for(const message in props.messages){
+            props.messages[message]['id'] = message
+            messageData.push(props.messages[message])
+        }
+    }
+
+    const msgElement = messageData.map(message=>{
+        return <ChatBubble key={message['id']} message={message} />
+    })
 
     return (
         <>
@@ -45,9 +56,7 @@ function ActiveChat(props) {
         <Row className="chat-content no-gutters">
             <Col md={12} className="m-2">
                 {
-                    msg.map(msg=>{
-                        return <ChatBubble type={msg}/>
-                    })
+                    msgElement
                 }
             </Col>
         </Row>
@@ -56,7 +65,7 @@ function ActiveChat(props) {
             <Col md={12} className="send-chat-box">
                 <form className="d-flex align-items-center form-chat-box" onSubmit={(e)=>sendMessage(e)} id="form-message">
                     <i className="fas fa-smile chat-box-button"></i>
-                    <input name="send-chat" id="chat-input" placeholder="Type a message" className="send-chat" type="text"></input>
+                    <input name="send-chat" id="chat-input" autoComplete="off" placeholder="Type a message" className="send-chat" type="text"></input>
                     <i className="fa fa-paper-plane chat-box-button mr-2" onClick={(e) => sendMessage(e)} aria-hidden="true" ></i>
                 </form>
             </Col>

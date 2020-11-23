@@ -1,7 +1,10 @@
 import React from 'react';
 
 function chatBubble(props) {
-    if(props.type === 'out'){
+    const userId  = localStorage.getItem('userId')
+    const message = props.message
+
+    if(message.sender === userId){
         return (
             <div className="row no-gutters">
                 <div className="col-md-6 offset-6">
@@ -24,7 +27,6 @@ function chatBubble(props) {
             </div>
         )
     }
-
 }
 
 export default chatBubble;

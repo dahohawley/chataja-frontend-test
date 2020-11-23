@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './Chat/chat.css'
 import FriendList from './Chat/FriendList'
 import Users from '../Users' 
 import ActiveChat from './Chat/ActiveChat'
@@ -34,25 +33,24 @@ function Chat(props) {
         }
     })[0]
 
-    const onMessage = (data) =>{
-        console.log(data.val())
-    }
-
     const errMessage = (err) => {
 
     }
 
     const clickUser = (data) =>{
         const ref = fire.database().ref('chats/'+userId+'/'+data.id)
-        ref.on('value',onMessage,errMessage)
+        ref.on('value',(data)=>{
+            setMessages(data.val())
+        },errMessage)
         setChatUser(data)
         setHasChat(true)
     }
 
     const sendMessage = (message) =>{
-        fire.database().ref('chats/'+userId +'/'+chatUser.id).set({
-            timestamps : new Date(),
-            message : message
+        fire.database().ref('chats/'+userId +'/'+chatUser.id).push({
+            timestamps : new Date().toString(),
+            message : message,
+            sender : userId
         })
     }
     
