@@ -8,7 +8,6 @@ function App() {
 		<Router>
             <Route path="/" exact component={Login}></Route>
             <Route path="/chat" component={Chat}></Route>
-
 		</Router>
 	);
 }	

@@ -38,7 +38,16 @@ function Chat(props) {
     }
 
     const clickUser = (data) =>{
-        const ref = fire.database().ref('chats/'+userId+'/'+data.id)
+        let chatId  = null
+        
+        if(userId < data.id){
+            chatId  = userId+"_"+data.id
+        }else{
+            chatId  = data.id+"_"+userId
+        }
+
+        const ref = fire.database().ref('chats/'+chatId)
+
         ref.on('value',(data)=>{
             setMessages(data.val())
         },errMessage)
@@ -47,7 +56,15 @@ function Chat(props) {
     }
 
     const sendMessage = (message) =>{
-        fire.database().ref('chats/'+userId +'/'+chatUser.id).push({
+        let chatId  = null
+        
+        if(userId < chatUser.id){
+            chatId  = userId+"_"+chatUser.id
+        }else{
+            chatId  = chatUser.id+"_"+userId
+        }
+        
+        fire.database().ref('chats/'+chatId).push({
             timestamps : new Date().toString(),
             message : message,
             sender : userId
